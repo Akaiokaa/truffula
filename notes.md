@@ -49,3 +49,6 @@ PLEASE MAKE FREQUENT COMMITS AS YOU FILL OUT THIS FILE.
   );
   -review java.io
 ## AlphabeticalFileSorter.java
+- used for sorting an array of files alphabetically by name
+- takes in a array of files
+- review Arrays.sort(files, (f1, f2) -> f1.getName().compareToIgnoreCase(f2.getName()));
