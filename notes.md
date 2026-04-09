@@ -36,7 +36,11 @@ PLEASE MAKE FREQUENT COMMITS AS YOU FILL OUT THIS FILE.
 - ConsoleColor.RESET;? Review these
 - assertEquals(expectedOutput, outputStream.toString()) compares expectedOutput with the outputStream
 ## TruffulaOptions.java / TruffulaOptionsTest.java
-
+- controls how the tree is displayed
+- flags -h -nc path required
+- TruffulaOptions() stores the root showHidden and useColor
+- Tests check if the TruffulaOptions object works properly
+- Tests use a temp direcotry to test
 ## TruffulaPrinter.java / TruffulaPrinterTest.java
 
 ## AlphabeticalFileSorter.java
