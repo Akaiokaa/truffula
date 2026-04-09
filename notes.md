@@ -11,6 +11,12 @@ PLEASE MAKE FREQUENT COMMITS AS YOU FILL OUT THIS FILE.
 - We will pass the args into a TruffulaOptions object passing it to a new TruffulaPrinter
 - Finally we will call a method called printTree on TrufflaPrinter
 ## ConsoleColor.java
+- Learn Enums
+- review this section and its meaning "To apply a color, prepend the ANSI code to the text, and append the RESET code"
+- Colors and their respective ANSI colors
+- private final string code stores the Ansi escape color for the code
+- getCode() returns the ANSI escape code as a string
+-toString() also for ANSI code or the ENUM to be used driectly in print statments
 
 ## ColorPrinter.java / ColorPrinterTest.java
 
