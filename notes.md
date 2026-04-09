@@ -4,7 +4,12 @@ As part of Wave 0, please fill out notes for each of the below files. They are i
 PLEASE MAKE FREQUENT COMMITS AS YOU FILL OUT THIS FILE.
 
 ## App.java
-
+- Uses flags -h -nc, -h shows hidden files, -nc puts no color
+- By defualt files are hidden, and color is enabled by default.
+- Path argument is mandatory
+- -h and -nc flag orders should not matter
+- We will pass the args into a TruffulaOptions object passing it to a new TruffulaPrinter
+- Finally we will call a method called printTree on TrufflaPrinter
 ## ConsoleColor.java
 
 ## ColorPrinter.java / ColorPrinterTest.java
