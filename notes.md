@@ -19,7 +19,12 @@ PLEASE MAKE FREQUENT COMMITS AS YOU FILL OUT THIS FILE.
 -toString() also for ANSI code or the ENUM to be used driectly in print statments
 
 ## ColorPrinter.java / ColorPrinterTest.java
-
+- Contains tests for ColorPrinter.java
+- Learn how ByteArrayOutputSteam and PrintStream interact
+- ColorPrinter class is called and tested with the printStream as output
+- Uses printer object to test the Color
+- ConsoleColor.RESET;? Review these
+- assertEquals(expectedOutput, outputStream.toString()) compares expectedOutput with the outputStream
 ## TruffulaOptions.java / TruffulaOptionsTest.java
 
 ## TruffulaPrinter.java / TruffulaPrinterTest.java
