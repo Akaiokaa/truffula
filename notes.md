@@ -19,6 +19,16 @@ PLEASE MAKE FREQUENT COMMITS AS YOU FILL OUT THIS FILE.
 -toString() also for ANSI code or the ENUM to be used driectly in print statments
 
 ## ColorPrinter.java / ColorPrinterTest.java
+--ColorPrinter.java
+- handles printing colored text to a PrintStream 
+- ConsoleColor is the color used for printing
+- printStream will decide the colored output will be written
+- getCurrentColor() returns the current color set for the printer
+- void setCurrentColor(ConsoleColor color) sets color and for subsquent print operations until it is changed or reset
+- println(String message) prints message followed by a newline in the current color
+- println(String message, boolean reset) about the same but allows for reset color functionality
+- this(printStream, ConsoleColor.WHITE); review weird format
+--ColorPrinterTest.java
 - Contains tests for ColorPrinter.java
 - Learn how ByteArrayOutputSteam and PrintStream interact
 - ColorPrinter class is called and tested with the printStream as output
