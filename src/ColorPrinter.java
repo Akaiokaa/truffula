@@ -1,3 +1,4 @@
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 /**
@@ -87,8 +88,12 @@ public class ColorPrinter {
    */
   public void print(String message, boolean reset) {
     // TODO: Implement this!
+    if (reset) {
+      printStream.append(currentColor + message + ConsoleColor.RESET);
+    } else {
+      printStream.append(currentColor + message);
+    }
   }
-
   /**
    * Constructs a ColorPrinter with the specified PrintStream.
    * The default color is set to ConsoleColor.WHITE.
@@ -108,5 +113,22 @@ public class ColorPrinter {
   public ColorPrinter(PrintStream printStream, ConsoleColor color) {
     this.printStream = printStream;
     this.currentColor = color;
+  }
+
+  public static void main(String[] args) {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(outputStream);
+
+    ColorPrinter printer = new ColorPrinter(printStream);
+    printer.setCurrentColor(ConsoleColor.RED);
+    printer.println("This is red text", false);
+
+    printer.setCurrentColor(ConsoleColor.GREEN);
+    printer.println("This is green text", false);
+
+    printer.setCurrentColor(ConsoleColor.BLUE);
+    printer.println("This is blue text", false);
+
+
   }
 }
