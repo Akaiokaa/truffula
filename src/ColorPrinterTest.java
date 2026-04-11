@@ -171,4 +171,38 @@ class ColorPrinterTest {
     assertEquals(expectedOutput, outputStream.toString());
   }
   
+   @Test
+  void testPrintlnAlternatingColorsThenMessageMultipleAfterReset() {
+     // Arrange: Capture the printed output
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(outputStream);
+
+    ColorPrinter printer = new ColorPrinter(printStream);
+    printer.setCurrentColor(ConsoleColor.RED);
+
+    // Act: Print the message
+    String message = "I speak for the trees";
+    printer.println(message); // currentColor + message + ConsoleColor.RESET
+
+    printer.setCurrentColor(ConsoleColor.BLUE);
+    String messageAfter = "this should be defualt"; //currentColor + message + ConsoleColor.RESET
+    printer.println(messageAfter);
+
+    printer.setCurrentColor(ConsoleColor.WHITE);
+    String messageAfter2 = "this should be defualt"; //currentColor + message + ConsoleColor.RESET
+    printer.println(messageAfter2);
+
+    String messageAfter3 = "this should be defualt"; //currentColor + message + ConsoleColor.RESET
+    printer.println(messageAfter3);
+
+
+
+    String expectedOutput = ConsoleColor.RED + "I speak for the trees" + System.lineSeparator() + ConsoleColor.RESET 
+    + ConsoleColor.BLUE + messageAfter + System.lineSeparator() + ConsoleColor.RESET 
+    + ConsoleColor.WHITE + messageAfter2 + System.lineSeparator() + ConsoleColor.RESET + ConsoleColor.RESET 
+    + messageAfter3 + System.lineSeparator()+ ConsoleColor.RESET;
+
+    // Assert: Verify the printed output
+    assertEquals(expectedOutput, outputStream.toString());
+  }
 }
