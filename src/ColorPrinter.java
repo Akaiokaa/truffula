@@ -89,9 +89,15 @@ public class ColorPrinter {
   public void print(String message, boolean reset) {
     // TODO: Implement this!
     if (reset) {
-      printStream.append(currentColor + message + ConsoleColor.RESET);
+      printStream.append(currentColor.getCode());
+      printStream.append(message + ConsoleColor.RESET);
+
+      // System.out.print(currentColor + message + ConsoleColor.RESET);
+      setCurrentColor(ConsoleColor.RESET);
+      
     } else {
       printStream.append(currentColor + message);
+      // System.out.print(currentColor + message);
     }
   }
   /**
@@ -121,14 +127,12 @@ public class ColorPrinter {
 
     ColorPrinter printer = new ColorPrinter(printStream);
     printer.setCurrentColor(ConsoleColor.RED);
-    printer.println("This is red text", false);
 
-    printer.setCurrentColor(ConsoleColor.GREEN);
-    printer.println("This is green text", false);
+    String message = "I speak for the trees";
+    printer.println(message); // currentColor + message + ConsoleColor.RESET
 
-    printer.setCurrentColor(ConsoleColor.BLUE);
-    printer.println("This is blue text", false);
-
+    String messageAfter = "this should be defualt"; //currentColor + message + ConsoleColor.RESET
+    printer.println(messageAfter);
 
   }
 }
