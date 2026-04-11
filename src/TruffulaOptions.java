@@ -104,7 +104,7 @@ public class TruffulaOptions  {
     // TODO: Replace the below lines with your implementation
     root = null;
     showHidden = false;
-    useColor = false;
+    useColor = true;
   }
 
   /**
