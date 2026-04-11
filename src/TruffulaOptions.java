@@ -129,7 +129,7 @@ public class TruffulaOptions  {
 
     File directory = new File(file);
 
-    if (directory.isDirectory()) {
+    if (directory.isDirectory() && directory.exists()) {
       root = directory;
     } else {
       throw new FileNotFoundException("directory cannot be found");
