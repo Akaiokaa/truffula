@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Represents configuration options for controlling how a directory tree is displayed.
@@ -102,9 +104,39 @@ public class TruffulaOptions  {
    */
   public TruffulaOptions(String[] args) throws IllegalArgumentException, FileNotFoundException {
     // TODO: Replace the below lines with your implementation
-    root = null;
-    showHidden = false;
-    useColor = true;
+    Set<String> set = new HashSet<>();
+    String file = "";
+    
+    for(String arg: args){
+      if (arg.length() > 3) {
+        file = arg;
+      } else {
+        if (arg == "-h" || arg == "-nc") {
+          set.add(arg);
+        } else {
+          throw new IllegalArgumentException("unknown arguments");
+        }
+        
+      }
+    }
+    
+    if (set.contains("")) {
+      throw new FileNotFoundException("directory cannot be found");
+    }
+  
+    boolean showHid = set.contains("-h");
+    boolean useCol = !set.contains("-nc");
+
+    File directory = new File(file);
+
+    if (directory.isDirectory()) {
+      root = directory;
+    } else {
+      throw new FileNotFoundException("directory cannot be found");
+    }
+
+    showHidden = showHid;
+    useColor = useCol;
   }
 
   /**
