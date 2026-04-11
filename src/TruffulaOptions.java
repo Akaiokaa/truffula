@@ -108,15 +108,10 @@ public class TruffulaOptions  {
     String file = "";
     
     for(String arg: args){
-      if (arg.length() > 3) {
-        file = arg;
+      if (arg == "-h" || arg == "-nc") {
+        set.add(arg);
       } else {
-        if (arg == "-h" || arg == "-nc") {
-          set.add(arg);
-        } else {
-          throw new IllegalArgumentException("unknown arguments");
-        }
-        
+        file = arg;
       }
     }
     
