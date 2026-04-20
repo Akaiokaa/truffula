@@ -177,81 +177,7 @@ public class TruffulaPrinterTest {
 
     }
 
-    // @Test
-    // public void testPrintTree_ExactOutput_AlternatingFileColors(@TempDir File tempDir) throws IOException {
-    //     File myFolder = new File(tempDir, "myFolder");
-    //     assertTrue(myFolder.mkdir(), "myFolder should be created");
-
-    //     File apple = new File(myFolder, "Apple.txt");
-    //     File banana = new File(myFolder, "Banana.txt");
-    //     File zebra = new File(myFolder, "Orange.txt");
-    //     apple.createNewFile();
-    //     banana.createNewFile();
-    //     zebra.createNewFile();
-
-    //     TruffulaOptions options = new TruffulaOptions(myFolder, false, true);
     
-    //     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    //     PrintStream printStream = new PrintStream(baos);
-
-    //     TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
-
-    //     printer.printTree();
-
-    //     String output = baos.toString();
-    //     String nl = System.lineSeparator();
-
-    //     ConsoleColor reset = ConsoleColor.RESET;
-    //     ConsoleColor white = ConsoleColor.WHITE;
-    //     ConsoleColor purple = ConsoleColor.PURPLE;
-
-    //     StringBuilder expected = new StringBuilder();
-    //     expected.append(white).append("myFolder/").append(nl).append(reset);
-    //     expected.append(purple).append("   Apple.txt").append(nl).append(reset);
-    //     expected.append(white).append("   Banana.txt").append(nl).append(reset);
-    //     expected.append(purple).append("   Orange.txt").append(nl).append(reset);
-
-    //     assertEquals(expected.toString(), output);
-
-    // }
-
-    @Test
-    public void testPrintTree_ExactOutput_SameColorsForFirstLevel(@TempDir File tempDir) throws IOException {
-        File myFolder = new File(tempDir, "myFolder");
-        assertTrue(myFolder.mkdir(), "myFolder should be created");
-
-        File apple = new File(myFolder, "Apple.txt");
-        File banana = new File(myFolder, "Banana.txt");
-        File orange = new File(myFolder, "Orange.txt");
-        apple.createNewFile();
-        banana.createNewFile();
-        orange.createNewFile();
-
-        TruffulaOptions options = new TruffulaOptions(myFolder, false, true);
-    
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-
-        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
-
-        printer.printTree();
-
-        String output = baos.toString();
-        String nl = System.lineSeparator();
-
-        ConsoleColor reset = ConsoleColor.RESET;
-        ConsoleColor white = ConsoleColor.WHITE;
-        ConsoleColor yellow = ConsoleColor.YELLOW;
-
-        StringBuilder expected = new StringBuilder();
-        expected.append(white).append("myFolder/").append(nl).append(reset);
-        expected.append(yellow).append("   Apple.txt").append(nl).append(reset);
-        expected.append(yellow).append("   Banana.txt").append(nl).append(reset);
-        expected.append(yellow).append("   Orange.txt").append(nl).append(reset);
-
-        assertEquals(expected.toString(), output);
-
-    }
 
     @Test
     public void testPrintTree_ExactOutput_HiddenFiles(@TempDir File tempDir) throws IOException {
@@ -449,6 +375,182 @@ public class TruffulaPrinterTest {
         expected.append(reset).append("   Documents/").append(nl).append(reset);
         expected.append(reset).append("      .notes.txt").append(nl).append(reset);
         expected.append(reset).append("      .READ.md").append(nl).append(reset);
+
+        assertEquals(expected.toString(), output);
+
+    }
+
+    @Test
+    public void testPrintTree_ExactOutput_AlternatingFileColors(@TempDir File tempDir) throws IOException {
+        File myFolder = new File(tempDir, "myFolder");
+        assertTrue(myFolder.mkdir(), "myFolder should be created");
+
+        createHiddenFile(myFolder, ".first_hidden.txt");
+        createHiddenFile(myFolder, ".second_hidden.txt");
+        createHiddenFile(myFolder, ".third_hidden.txt");
+
+        File documents = new File(myFolder, "Documents");
+        assertTrue(documents.mkdir(), "Documents directory should be created");
+
+      
+        
+        createHiddenFile(documents, ".READ.md");
+        createHiddenFile(documents, ".notes.txt");
+       
+
+        TruffulaOptions options = new TruffulaOptions(myFolder, true, false);
+    
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+
+        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
+
+        printer.printTree();
+
+        String output = baos.toString();
+        String nl = System.lineSeparator();
+
+        ConsoleColor reset = ConsoleColor.RESET;
+        ConsoleColor white = ConsoleColor.WHITE;
+        ConsoleColor purple = ConsoleColor.PURPLE;
+        ConsoleColor yellow = ConsoleColor.YELLOW;
+
+        StringBuilder expected = new StringBuilder();
+        expected.append(white).append("myFolder/").append(nl).append(reset);
+        expected.append(purple).append("   .first_hidden.txt").append(nl).append(reset);
+        expected.append(purple).append("   .second_hidden.txt").append(nl).append(reset);
+        expected.append(purple).append("   .third_hidden.txt").append(nl).append(reset);
+        expected.append(purple).append("   Documents/").append(nl).append(reset);
+        expected.append(yellow).append("      .notes.txt").append(nl).append(reset);
+        expected.append(yellow).append("      .READ.md").append(nl).append(reset);
+
+        assertEquals(expected.toString(), output);
+
+    }
+
+    @Test
+    public void testPrintTree_ExactOutput_SameColorsForFirstLevel(@TempDir File tempDir) throws IOException {
+        File myFolder = new File(tempDir, "myFolder");
+        assertTrue(myFolder.mkdir(), "myFolder should be created");
+
+        File apple = new File(myFolder, "Apple.txt");
+        File banana = new File(myFolder, "Banana.txt");
+        File orange = new File(myFolder, "Orange.txt");
+        apple.createNewFile();
+        banana.createNewFile();
+        orange.createNewFile();
+
+        TruffulaOptions options = new TruffulaOptions(myFolder, false, true);
+    
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+
+        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
+
+        printer.printTree();
+
+        String output = baos.toString();
+        String nl = System.lineSeparator();
+
+        ConsoleColor reset = ConsoleColor.RESET;
+        ConsoleColor white = ConsoleColor.WHITE;
+        ConsoleColor purple = ConsoleColor.PURPLE;
+
+        StringBuilder expected = new StringBuilder();
+        expected.append(white).append("myFolder/").append(nl).append(reset);
+        expected.append(purple).append("   Apple.txt").append(nl).append(reset);
+        expected.append(purple).append("   Banana.txt").append(nl).append(reset);
+        expected.append(purple).append("   Orange.txt").append(nl).append(reset);
+
+        assertEquals(expected.toString(), output);
+
+    }
+
+    @Test
+    public void testPrintTree_ExactOutput_SameColorsForFirstLevelUseColorFalse(@TempDir File tempDir) throws IOException {
+        File myFolder = new File(tempDir, "myFolder");
+        assertTrue(myFolder.mkdir(), "myFolder should be created");
+
+        File apple = new File(myFolder, "Apple.txt");
+        File banana = new File(myFolder, "Banana.txt");
+        File orange = new File(myFolder, "Orange.txt");
+        apple.createNewFile();
+        banana.createNewFile();
+        orange.createNewFile();
+
+        TruffulaOptions options = new TruffulaOptions(myFolder, false, false);
+    
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+
+        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
+
+        printer.printTree();
+
+        String output = baos.toString();
+        String nl = System.lineSeparator();
+
+        ConsoleColor reset = ConsoleColor.RESET;
+        ConsoleColor white = ConsoleColor.WHITE;
+        ConsoleColor purple = ConsoleColor.PURPLE;
+
+        StringBuilder expected = new StringBuilder();
+        expected.append(white).append("myFolder/").append(nl).append(reset);
+        expected.append(white).append("   Apple.txt").append(nl).append(reset);
+        expected.append(white).append("   Banana.txt").append(nl).append(reset);
+        expected.append(white).append("   Orange.txt").append(nl).append(reset);
+
+        assertEquals(expected.toString(), output);
+
+    }
+
+    @Test
+    public void testPrintTree_ExactOutput_ColorsAlternatingMultipleFoldersWhitePurpleYellow(@TempDir File tempDir) throws IOException {
+
+        File myFolder = new File(tempDir, "myFolder");
+        assertTrue(myFolder.mkdir(), "myFolder should be created");
+
+        File otherFolders = new File(myFolder, "myFolder2");
+        assertTrue(otherFolders.mkdir(), "Documents directory should be created");
+
+        File otherOtherFolders = new File(otherFolders, "myFolder3");
+        assertTrue(otherOtherFolders.mkdir(), "Documents directory should be created");
+
+        File otherOtherOtherFolders = new File(otherOtherFolders, "myFolder4");
+        assertTrue(otherOtherOtherFolders.mkdir(), "Documents directory should be created");
+
+        File otherOtherOtherOtherFolders = new File(otherOtherOtherFolders, "myFolder5");
+        assertTrue(otherOtherOtherOtherFolders.mkdir(), "Documents directory should be created");
+
+        File otherOtherOtherOtherOtherFolders = new File(otherOtherOtherOtherFolders, "myFolder6");
+        assertTrue(otherOtherOtherOtherOtherFolders.mkdir(), "Documents directory should be created");
+
+
+
+        TruffulaOptions options = new TruffulaOptions(myFolder, false, true);
+    
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+
+        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
+
+        printer.printTree();
+
+        String output = baos.toString();
+        String nl = System.lineSeparator();
+
+        ConsoleColor reset = ConsoleColor.RESET;
+        ConsoleColor white = ConsoleColor.WHITE;
+        ConsoleColor purple = ConsoleColor.PURPLE;
+        ConsoleColor yellow = ConsoleColor.YELLOW;
+
+        StringBuilder expected = new StringBuilder();
+        expected.append(white).append("myFolder/").append(nl).append(reset);
+        expected.append(purple).append("   myFolder2/").append(nl).append(reset);
+        expected.append(yellow).append("      myFolder3/").append(nl).append(reset);
+        expected.append(white).append("         myFolder4/").append(nl).append(reset);
+        expected.append(purple).append("            myFolder5/").append(nl).append(reset);
+        expected.append(yellow).append("               myFolder6/").append(nl).append(reset);
 
         assertEquals(expected.toString(), output);
 
