@@ -122,7 +122,7 @@ public class TruffulaPrinter {
 
   public void printTreeHelper(File root, int level) {
     if (root == null || !root.isDirectory()) return;
-    out.println(indentation(level) + root.getName() + (root.isDirectory() ? "/" : "" ));
+    out.println(colors(root.getName(), level) + root.getName() + (root.isDirectory() ? "/" : "" ));
     
     File[] files = root.listFiles();
     if (files == null) return;
@@ -130,19 +130,21 @@ public class TruffulaPrinter {
     for(File f: files){
       if (!f.isDirectory()) {
         if (options.isShowHidden()) {
-          out.println(indentation(level) + "   " + f.getName());
+          out.println(colors(f.getName(), level + 1) + f.getName());
         } else {
           if (f.getName().charAt(0) != '.') {
-            out.println(indentation(level) + "   " + f.getName());
+            out.println(colors(f.getName(), level + 1) + f.getName());
           }
         }
       }
-      
-      printTreeHelper(f, level + 1);
+
+      if (f.isDirectory()) {
+        printTreeHelper(f, level + 1);
+      }
     }
   }
 
-  public static String indentation(int numberOfSpacing) {
+  public static String indentation(int numberOfSpacing, String name) {
     StringBuilder indents = new StringBuilder();
     
     for(int i = 0; i < numberOfSpacing; i++) {
@@ -151,5 +153,27 @@ public class TruffulaPrinter {
     String indentsToReturn = "" + indents;
 
     return indentsToReturn;
+  }
+
+  public String colors(String name, int level){
+    String indents = indentation(level, name);
+
+    if (!options.isUseColor()) {
+      out.setCurrentColor(ConsoleColor.WHITE);
+      return indents;
+    }
+    
+    int mod = level % 3;
+    if (mod == 0) {
+      out.setCurrentColor(ConsoleColor.WHITE);
+      return indents;
+    } else if(mod == 1) {
+      out.setCurrentColor(ConsoleColor.PURPLE);
+      return indents;
+    } else {
+      out.setCurrentColor(ConsoleColor.YELLOW);
+      return indents;
+    } 
+    
   }
 }

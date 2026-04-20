@@ -205,9 +205,9 @@ public class TruffulaPrinterTest {
 
         StringBuilder expected = new StringBuilder();
         expected.append(white).append("myFolder/").append(nl).append(reset);
-        expected.append(reset).append("   .first_hidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   .second_hidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   .third_hidden.txt").append(nl).append(reset);
+        expected.append(white).append("   .first_hidden.txt").append(nl).append(reset);
+        expected.append(white).append("   .second_hidden.txt").append(nl).append(reset);
+        expected.append(white).append("   .third_hidden.txt").append(nl).append(reset);
 
         assertEquals(expected.toString(), output);
 
@@ -279,9 +279,9 @@ public class TruffulaPrinterTest {
         ConsoleColor yellow = ConsoleColor.YELLOW;
         StringBuilder expected = new StringBuilder();
         expected.append(white).append("myFolder/").append(nl).append(reset);
-        expected.append(reset).append("   first_unhidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   second_unhidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   third_unhidden.txt").append(nl).append(reset);
+        expected.append(white).append("   first_unhidden.txt").append(nl).append(reset);
+        expected.append(white).append("   second_unhidden.txt").append(nl).append(reset);
+        expected.append(white).append("   third_unhidden.txt").append(nl).append(reset);
 
         assertEquals(expected.toString(), output);
 
@@ -323,12 +323,12 @@ public class TruffulaPrinterTest {
         StringBuilder expected = new StringBuilder();
         
         expected.append(white).append("myFolder/").append(nl).append(reset);
-        expected.append(reset).append("   .first_hidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   .second_hidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   .third_hidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   first_unhidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   second_unhidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   third_unhidden.txt").append(nl).append(reset);
+        expected.append(white).append("   .first_hidden.txt").append(nl).append(reset);
+        expected.append(white).append("   .second_hidden.txt").append(nl).append(reset);
+        expected.append(white).append("   .third_hidden.txt").append(nl).append(reset);
+        expected.append(white).append("   first_unhidden.txt").append(nl).append(reset);
+        expected.append(white).append("   second_unhidden.txt").append(nl).append(reset);
+        expected.append(white).append("   third_unhidden.txt").append(nl).append(reset);
 
         assertEquals(expected.toString(), output);
 
@@ -369,12 +369,12 @@ public class TruffulaPrinterTest {
 
         StringBuilder expected = new StringBuilder();
         expected.append(white).append("myFolder/").append(nl).append(reset);
-        expected.append(reset).append("   .first_hidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   .second_hidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   .third_hidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   Documents/").append(nl).append(reset);
-        expected.append(reset).append("      .notes.txt").append(nl).append(reset);
-        expected.append(reset).append("      .READ.md").append(nl).append(reset);
+        expected.append(white).append("   .first_hidden.txt").append(nl).append(reset);
+        expected.append(white).append("   .second_hidden.txt").append(nl).append(reset);
+        expected.append(white).append("   .third_hidden.txt").append(nl).append(reset);
+        expected.append(white).append("   Documents/").append(nl).append(reset);
+        expected.append(white).append("      .notes.txt").append(nl).append(reset);
+        expected.append(white).append("      .READ.md").append(nl).append(reset);
 
         assertEquals(expected.toString(), output);
 
@@ -398,7 +398,7 @@ public class TruffulaPrinterTest {
         createHiddenFile(documents, ".notes.txt");
        
 
-        TruffulaOptions options = new TruffulaOptions(myFolder, true, false);
+        TruffulaOptions options = new TruffulaOptions(myFolder, true, true);
     
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(baos);
