@@ -277,9 +277,9 @@ public class TruffulaPrinterTest {
 
         StringBuilder expected = new StringBuilder();
         expected.append(reset).append("myFolder/").append(nl).append(reset);
-        expected.append(reset).append("   first_hidden").append(nl).append(reset);
-        expected.append(reset).append("   second_hidden.txt").append(nl).append(reset);
-        expected.append(reset).append("   third_hidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   .first_hidden").append(nl).append(reset);
+        expected.append(reset).append("   .second_hidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   .third_hidden.txt").append(nl).append(reset);
 
         assertEquals(expected.toString(), output);
 
