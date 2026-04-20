@@ -125,6 +125,8 @@ public class TruffulaPrinter {
     out.println(colors(root.getName(), level) + root.getName() + (root.isDirectory() ? "/" : "" ));
     
     File[] files = root.listFiles();
+    AlphabeticalFileSorter.sort(files);
+    
     if (files == null) return;
 
     for(File f: files){
