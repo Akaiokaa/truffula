@@ -177,17 +177,55 @@ public class TruffulaPrinterTest {
 
     }
 
+    // @Test
+    // public void testPrintTree_ExactOutput_AlternatingFileColors(@TempDir File tempDir) throws IOException {
+    //     File myFolder = new File(tempDir, "myFolder");
+    //     assertTrue(myFolder.mkdir(), "myFolder should be created");
+
+    //     File apple = new File(myFolder, "Apple.txt");
+    //     File banana = new File(myFolder, "Banana.txt");
+    //     File zebra = new File(myFolder, "Orange.txt");
+    //     apple.createNewFile();
+    //     banana.createNewFile();
+    //     zebra.createNewFile();
+
+    //     TruffulaOptions options = new TruffulaOptions(myFolder, false, true);
+    
+    //     ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    //     PrintStream printStream = new PrintStream(baos);
+
+    //     TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
+
+    //     printer.printTree();
+
+    //     String output = baos.toString();
+    //     String nl = System.lineSeparator();
+
+    //     ConsoleColor reset = ConsoleColor.RESET;
+    //     ConsoleColor white = ConsoleColor.WHITE;
+    //     ConsoleColor purple = ConsoleColor.PURPLE;
+
+    //     StringBuilder expected = new StringBuilder();
+    //     expected.append(white).append("myFolder/").append(nl).append(reset);
+    //     expected.append(purple).append("   Apple.txt").append(nl).append(reset);
+    //     expected.append(white).append("   Banana.txt").append(nl).append(reset);
+    //     expected.append(purple).append("   Orange.txt").append(nl).append(reset);
+
+    //     assertEquals(expected.toString(), output);
+
+    // }
+
     @Test
-    public void testPrintTree_ExactOutput_AlternatingFileColors(@TempDir File tempDir) throws IOException {
+    public void testPrintTree_ExactOutput_SameColorsForFirstLevel(@TempDir File tempDir) throws IOException {
         File myFolder = new File(tempDir, "myFolder");
         assertTrue(myFolder.mkdir(), "myFolder should be created");
 
         File apple = new File(myFolder, "Apple.txt");
         File banana = new File(myFolder, "Banana.txt");
-        File zebra = new File(myFolder, "Orange.txt");
+        File orange = new File(myFolder, "Orange.txt");
         apple.createNewFile();
         banana.createNewFile();
-        zebra.createNewFile();
+        orange.createNewFile();
 
         TruffulaOptions options = new TruffulaOptions(myFolder, false, true);
     
@@ -203,50 +241,13 @@ public class TruffulaPrinterTest {
 
         ConsoleColor reset = ConsoleColor.RESET;
         ConsoleColor white = ConsoleColor.WHITE;
-        ConsoleColor purple = ConsoleColor.PURPLE;
+        ConsoleColor yellow = ConsoleColor.YELLOW;
 
         StringBuilder expected = new StringBuilder();
         expected.append(white).append("myFolder/").append(nl).append(reset);
-        expected.append(purple).append("   Apple.txt").append(nl).append(reset);
-        expected.append(white).append("   Banana.txt").append(nl).append(reset);
-        expected.append(purple).append("   Orange.txt").append(nl).append(reset);
-
-        assertEquals(expected.toString(), output);
-
-    }
-
-    @Test
-    public void testPrintTree_ExactOutput_SameColorsthroughOut(@TempDir File tempDir) throws IOException {
-        File myFolder = new File(tempDir, "myFolder");
-        assertTrue(myFolder.mkdir(), "myFolder should be created");
-
-        File apple = new File(myFolder, "Apple.txt");
-        File banana = new File(myFolder, "Banana.txt");
-        File zebra = new File(myFolder, "Orange.txt");
-        apple.createNewFile();
-        banana.createNewFile();
-        zebra.createNewFile();
-
-        TruffulaOptions options = new TruffulaOptions(myFolder, false, true);
-    
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream printStream = new PrintStream(baos);
-
-        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
-
-        printer.printTree();
-
-        String output = baos.toString();
-        String nl = System.lineSeparator();
-
-        ConsoleColor reset = ConsoleColor.RESET;
-        ConsoleColor purple = ConsoleColor.PURPLE;
-
-        StringBuilder expected = new StringBuilder();
-        expected.append(purple).append("myFolder/").append(nl).append(reset);
-        expected.append(purple).append("   Apple.txt").append(nl).append(reset);
-        expected.append(purple).append("   Banana.txt").append(nl).append(reset);
-        expected.append(purple).append("   Orange.txt").append(nl).append(reset);
+        expected.append(yellow).append("   Apple.txt").append(nl).append(reset);
+        expected.append(yellow).append("   Banana.txt").append(nl).append(reset);
+        expected.append(yellow).append("   Orange.txt").append(nl).append(reset);
 
         assertEquals(expected.toString(), output);
 
@@ -274,12 +275,180 @@ public class TruffulaPrinterTest {
         String nl = System.lineSeparator();
 
         ConsoleColor reset = ConsoleColor.RESET;
+        ConsoleColor white = ConsoleColor.WHITE;
 
         StringBuilder expected = new StringBuilder();
-        expected.append(reset).append("myFolder/").append(nl).append(reset);
-        expected.append(reset).append("   .first_hidden").append(nl).append(reset);
+        expected.append(white).append("myFolder/").append(nl).append(reset);
+        expected.append(reset).append("   .first_hidden.txt").append(nl).append(reset);
         expected.append(reset).append("   .second_hidden.txt").append(nl).append(reset);
         expected.append(reset).append("   .third_hidden.txt").append(nl).append(reset);
+
+        assertEquals(expected.toString(), output);
+
+    }
+
+    @Test
+    public void testPrintTree_ExactOutput_HiddenFilesFalse(@TempDir File tempDir) throws IOException {
+        File myFolder = new File(tempDir, "myFolder");
+        assertTrue(myFolder.mkdir(), "myFolder should be created");
+
+        createHiddenFile(myFolder, ".first_hidden.txt");
+        createHiddenFile(myFolder, ".second_hidden.txt");
+        createHiddenFile(myFolder, ".third_hidden.txt");
+        
+        TruffulaOptions options = new TruffulaOptions(myFolder, false, false);
+    
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+
+        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
+
+        printer.printTree();
+
+        String output = baos.toString();
+        String nl = System.lineSeparator();
+
+        ConsoleColor reset = ConsoleColor.RESET;
+        ConsoleColor white = ConsoleColor.WHITE;
+
+        StringBuilder expected = new StringBuilder();
+        expected.append(white).append("myFolder/").append(nl).append(reset);
+
+        assertEquals(expected.toString(), output);
+
+    }
+
+    @Test
+    public void testPrintTree_ExactOutput_HiddenFilesFalseWithUnhiddenFiles(@TempDir File tempDir) throws IOException {
+        File myFolder = new File(tempDir, "myFolder");
+        assertTrue(myFolder.mkdir(), "myFolder should be created");
+
+        File h1 = new File(myFolder, "first_unhidden.txt");
+        File h2 = new File(myFolder, "second_unhidden.txt");
+        File h3 = new File(myFolder, "third_unhidden.txt");
+        
+        h1.createNewFile();
+        h2.createNewFile();
+        h3.createNewFile();
+
+        
+        createHiddenFile(myFolder, ".first_hidden.txt");
+        createHiddenFile(myFolder, ".second_hidden.txt");
+        createHiddenFile(myFolder, ".third_hidden.txt");
+        
+        TruffulaOptions options = new TruffulaOptions(myFolder, false, false);
+    
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+
+        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
+
+        printer.printTree();
+
+        String output = baos.toString();
+        String nl = System.lineSeparator();
+
+        ConsoleColor reset = ConsoleColor.RESET;
+        ConsoleColor white = ConsoleColor.WHITE;
+        ConsoleColor yellow = ConsoleColor.YELLOW;
+        StringBuilder expected = new StringBuilder();
+        expected.append(white).append("myFolder/").append(nl).append(reset);
+        expected.append(reset).append("   first_unhidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   second_unhidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   third_unhidden.txt").append(nl).append(reset);
+
+        assertEquals(expected.toString(), output);
+
+    }
+
+    @Test
+    public void testPrintTree_ExactOutput_HiddenFilesTrueWithUnhiddenFiles(@TempDir File tempDir) throws IOException {
+        File myFolder = new File(tempDir, "myFolder");
+        assertTrue(myFolder.mkdir(), "myFolder should be created");
+
+        File h1 = new File(myFolder, "first_unhidden.txt");
+        File h2 = new File(myFolder, "second_unhidden.txt");
+        File h3 = new File(myFolder, "third_unhidden.txt");
+        
+        h1.createNewFile();
+        h2.createNewFile();
+        h3.createNewFile();
+
+        
+        createHiddenFile(myFolder, ".first_hidden.txt");
+        createHiddenFile(myFolder, ".second_hidden.txt");
+        createHiddenFile(myFolder, ".third_hidden.txt");
+        
+        TruffulaOptions options = new TruffulaOptions(myFolder, true, false);
+    
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+
+        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
+
+        printer.printTree();
+
+        String output = baos.toString();
+        String nl = System.lineSeparator();
+
+        ConsoleColor reset = ConsoleColor.RESET;
+        ConsoleColor white = ConsoleColor.WHITE;
+        ConsoleColor yellow = ConsoleColor.YELLOW;
+        StringBuilder expected = new StringBuilder();
+        
+        expected.append(white).append("myFolder/").append(nl).append(reset);
+        expected.append(reset).append("   .first_hidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   .second_hidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   .third_hidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   first_unhidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   second_unhidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   third_unhidden.txt").append(nl).append(reset);
+
+        assertEquals(expected.toString(), output);
+
+    }
+
+    @Test
+    public void testPrintTree_ExactOutput_HiddenFilesWithinAnotherLevelDirectory(@TempDir File tempDir) throws IOException {
+        File myFolder = new File(tempDir, "myFolder");
+        assertTrue(myFolder.mkdir(), "myFolder should be created");
+
+        createHiddenFile(myFolder, ".first_hidden.txt");
+        createHiddenFile(myFolder, ".second_hidden.txt");
+        createHiddenFile(myFolder, ".third_hidden.txt");
+
+        File documents = new File(myFolder, "Documents");
+        assertTrue(documents.mkdir(), "Documents directory should be created");
+
+      
+        
+        createHiddenFile(documents, ".READ.md");
+        createHiddenFile(documents, ".notes.txt");
+       
+
+        TruffulaOptions options = new TruffulaOptions(myFolder, true, false);
+    
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+
+        TruffulaPrinter printer = new TruffulaPrinter(options, printStream);
+
+        printer.printTree();
+
+        String output = baos.toString();
+        String nl = System.lineSeparator();
+
+        ConsoleColor reset = ConsoleColor.RESET;
+        ConsoleColor white = ConsoleColor.WHITE;
+
+        StringBuilder expected = new StringBuilder();
+        expected.append(white).append("myFolder/").append(nl).append(reset);
+        expected.append(reset).append("   .first_hidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   .second_hidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   .third_hidden.txt").append(nl).append(reset);
+        expected.append(reset).append("   Documents/").append(nl).append(reset);
+        expected.append(reset).append("      .notes.txt").append(nl).append(reset);
+        expected.append(reset).append("      .READ.md").append(nl).append(reset);
 
         assertEquals(expected.toString(), output);
 

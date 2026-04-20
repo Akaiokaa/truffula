@@ -129,7 +129,13 @@ public class TruffulaPrinter {
 
     for(File f: files){
       if (!f.isDirectory()) {
-        out.println(indentation(level) + "   " + f.getName());
+        if (options.isShowHidden()) {
+          out.println(indentation(level) + "   " + f.getName());
+        } else {
+          if (f.getName().charAt(0) != '.') {
+            out.println(indentation(level) + "   " + f.getName());
+          }
+        }
       }
       
       printTreeHelper(f, level + 1);
